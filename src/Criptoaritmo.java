@@ -103,39 +103,7 @@ public class Criptoaritmo {
       }
       return uniqueCharacters;
    }
-    
-     /*public static int[] Criptoaritmo(String caracteres,int nivel ,int[] sol,boolean[] sinUsar) throws InterruptedException{
-        if(9 < nivel){
-            //System.out.print(sol);
-            return sol;
-        
-        }else{
-            for(int i=0; i<=9 ; i++ ){
-               //if(suma(sol,caracteres)){
-                if(sinUsar[i]){
-                
-                    sinUsar[nivel] = false;
-                
-                    sol[nivel] = i;
-                    
-                
-                    Criptoaritmo(caracteres, nivel + 1, sol, sinUsar);
-                
-                    sinUsar[nivel] = true;
-               
-                }
-                //}    
-                
-            } 
-        
-        }
-        return sol;
-        
-    
-    }*/
-    
-   
-    
+ 
     public static boolean suma(int a,int b,int c,int acarreo){
         int sum;
         sum = (a + b + acarreo);
