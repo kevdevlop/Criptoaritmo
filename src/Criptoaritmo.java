@@ -1,19 +1,20 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Criptoaritmo {
-    public static int[] sol;
-    public static int[] solA;
-    public static int[] solB;
-    public static int[] digitosF;
-    public static boolean[] sinUsar;
+    
+    
     
    public static void main(String[] args) throws InterruptedException{
        // TODO code application logic here
        Scanner teclado;
        teclado = new Scanner(System.in);
        String palabra1, palabra2, palabraResultado;
-       
+       ArrayList<Integer> sol = new ArrayList<Integer>();
+       ArrayList<Integer> solA = new ArrayList<Integer>();
+       ArrayList<Integer> solB = new ArrayList<Integer>();
+       ArrayList<Boolean> sinUsar = new ArrayList<Boolean>();
    
        
        System.out.print("Ingresa palabra 1: ");
@@ -23,28 +24,30 @@ public class Criptoaritmo {
        System.out.print("Ingresa Resultado: ");
        palabraResultado = teclado.next();
        String caracteresUnicos = obtenerUnicosCaracteres(palabra1+palabra2+palabraResultado);
-       sol = new int[palabraResultado.length()];
-       solA = new int[palabra1.length()];
-       solB = new int[palabra2.length()];
-       digitosF = new int[caracteresUnicos.length()];
-       sinUsar = new boolean[caracteresUnicos.length()];
+       
+       
+       
        for(int i = 0; i<caracteresUnicos.length() ; i++){
-           sinUsar[i] = true;
+           sinUsar.add(i,true);
        }
        
-       System.out.println("Caracteres unicos: "+ caracteresUnicos );
-       criptoaritmos(palabra1,palabra2,palabraResultado,sol,solA,solB,0,0,digitosF,sinUsar);
+       System.out.print("Caracteres unicos:  ");
+       imprimirCaracteres(caracteresUnicos);
+       criptoaritmos(palabra1,palabra2,palabraResultado,sol,solA,solB,0,0,sinUsar);
        
    }
    
-   public static void criptoaritmos(String palabra1, String palabra2, String Resultado,int[] sol,int[] solA,int[] solB,int acarreo,
-           int nivel,int[] digF,boolean[] sinUsar)throws InterruptedException{
+   public static void criptoaritmos(String palabra1, String palabra2, String Resultado, ArrayList<Integer> sol, ArrayList<Integer> solA, ArrayList<Integer> solB,
+           int acarreo, int nivel, ArrayList<Boolean> sinUsar)throws InterruptedException{
        
        if(nivel > Resultado.length()){ //criterio de corte: 
-           if( !(solA[0] == 0) && !(solB[0] == 0) && !(sol[0] == 0)){// si los valores de extrema izquierda son diferentes de 0 impime el resultado
+           if( !(solA.get(0) == 0) && !(solB.get(0) == 0) && !(sol.get(0) == 0)){// si los valores de extrema izquierda son diferentes de 0 impime el resultado
       
                 imprimirResultado(solA,palabra1);
+                System.out.println("\n              + \n");
                 imprimirResultado(solB, palabra2);
+                System.out.println("\n");
+                System.out.println("\n              = \n");
                 imprimirResultado(sol,Resultado);
                 
             }
@@ -53,25 +56,27 @@ public class Criptoaritmo {
            for (int i = 0; i < 10; i++){
                
                
-               if(sinUsar[i]){
-                   sinUsar[i] = false;
-                   solA[nivel] = i;
-                   solB[nivel] = i+1;
-                   sol[nivel] = i+2;
-                   System.out.println("acarreo: "+acarreo+" suma: "+(solA[nivel]+solB[nivel]+acarreo));
-                    System.out.println("solA: "+solA[nivel] +" nivel: "+ (nivel) +" "+i);
-                    System.out.println("solB: "+solB[nivel]+" nivel: "+ (nivel)+" "+(i+1) );
-                    System.out.println("sol: "+sol[nivel]+" nivel: "+ (nivel)+" "+(i+2) );
-                   if (sol[nivel] == (solA[nivel]+solB[nivel]+acarreo)){
-                        System.out.println("sumaT: "+(solA[nivel]+solB[nivel]+acarreo));
-                        acarreo = (solA[nivel]+solB[nivel]+acarreo)/10;
+               if(sinUsar.get(i)){
+                   sinUsar.add(Boolean.FALSE);
+                   solA.add(nivel,i);
+                   solB.add(nivel,i+1);
+                   sol.add(nivel,i+2);
+                    /*System.out.println("acarreo: "+acarreo+" suma: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
+                    System.out.println("solA: "+solA.get(nivel) +" nivel: "+ (nivel) +" "+i);
+                    System.out.println("solB: "+solB.get(nivel)+" nivel: "+ (nivel)+" "+(i+1) );
+                    System.out.println("sol: "+sol.get(nivel)+" nivel: "+ (nivel)+" "+(i+2) );*/
+                   if (sol.get(nivel) == (solA.get(nivel)+solB.get(nivel)+acarreo)){
+                        //System.out.println("sumaT: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
+                        acarreo = (solA.get(nivel)+solB.get(nivel)+acarreo)/10;
                         //digF[nivel] = (solA[nivel]+solB[nivel]+acarreo)%10;
-                        System.out.println("acarreonuew: "+acarreo);
-                        criptoaritmos(palabra1,palabra2,Resultado,sol,solA,solB,acarreo,nivel+1,digF,sinUsar); //Backtracking
-                        sinUsar[i] = true;
+                        //System.out.println("acarreonuew: "+acarreo);
+                        criptoaritmos(palabra1,palabra2,Resultado,sol,solA,solB,acarreo,nivel+1,sinUsar); //Backtracking
+                       
+                  
                     
-                    }  
-                   System.out.println("sumaF: "+(solA[nivel]+solB[nivel]+acarreo));
+                    }
+                    sinUsar.add(Boolean.TRUE);
+                   //System.out.println("sumaF: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
                    
                } 
                
@@ -115,11 +120,16 @@ public class Criptoaritmo {
             return false;
     }
 
-   
+   public static void imprimirCaracteres (String caracteres){
+        for(int i = 0; i< caracteres.length();i++){
+            System.out.print("   "+ caracteres.charAt(i) +"   ");
+        }    
+        System.out.print("\n\n");
+   }
     
-    public static void imprimirResultado(int[] sol,String caracteres){
+    public static void imprimirResultado(ArrayList<Integer> sol, String caracteres){
         for (int i = 0; i < caracteres.length() ; i++){
-            System.out.print( "   " + sol[i]+ "   ");
+            System.out.print(" " + sol.get(i)+ " ");
         }
     }
     
