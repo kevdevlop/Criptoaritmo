@@ -67,7 +67,7 @@ public class Criptoaritmo {
                         acarreo = (solA[nivel]+solB[nivel]+acarreo)/10;
                         //digF[nivel] = (solA[nivel]+solB[nivel]+acarreo)%10;
                         System.out.println("acarreonuew: "+acarreo);
-                        criptoaritmos(palabra1,palabra2,Resultado,sol,solA,solB,acarreo,nivel+1,digF,sinUsar);
+                        criptoaritmos(palabra1,palabra2,Resultado,sol,solA,solB,acarreo,nivel+1,digF,sinUsar); //Backtracking
                         sinUsar[i] = true;
                     
                     }  
@@ -146,18 +146,7 @@ public class Criptoaritmo {
             System.out.println("sumaF: "+(a + b + acarreo));
             return false;
     }
-    /*public static int sumar(int a,int b,int c,int acarreo){
-        if(a+b+c+acarreo > 10){
-            int suma = a+b+c+acarreo:
-            acareo = (a+b+c+acarreo)/10;
-            return suma;
-        }
-        else{
-            int suma = a+b+c+acarreo:
-            acarreo = 0;
-            return suma;
-        }
-    }*/
+
    
     
     public static void imprimirResultado(int[] sol,String caracteres){
