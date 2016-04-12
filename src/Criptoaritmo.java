@@ -27,7 +27,7 @@ public class Criptoaritmo {
        
        
        
-       for(int i = 0; i<caracteresUnicos.length() ; i++){
+       for(int i = 0; i<palabraResultado.length()-1; i++){
            sinUsar.add(i,true);
        }
        
@@ -40,50 +40,77 @@ public class Criptoaritmo {
    public static void criptoaritmos(String palabra1, String palabra2, String Resultado, ArrayList<Integer> sol, ArrayList<Integer> solA, ArrayList<Integer> solB,
            int acarreo, int nivel, ArrayList<Boolean> sinUsar)throws InterruptedException{
        
-       if(nivel > Resultado.length()){ //criterio de corte: 
-           if( !(solA.get(0) == 0) && !(solB.get(0) == 0) && !(sol.get(0) == 0)){// si los valores de extrema izquierda son diferentes de 0 impime el resultado
+       if(nivel > Resultado.length()){ 
+           
       
-                imprimirResultado(solA,palabra1);
+                //imprimirResultado(solA,palabra1);
+                System.out.println(" "+ solA);
                 System.out.println("\n              + \n");
-                imprimirResultado(solB, palabra2);
+                //imprimirResultado(solB, palabra2);
+                System.out.println(" "+ solB);
                 System.out.println("\n");
                 System.out.println("\n              = \n");
-                imprimirResultado(sol,Resultado);
+                System.out.println(" "+ sol);
+                //imprimirResultado(sol,Resultado);
                 
-            }
+            
            
        }else{
            for (int i = 0; i < 10; i++){
                
                
                if(sinUsar.get(i)){
-                   sinUsar.add(Boolean.FALSE);
-                   solA.add(nivel,i);
-                   solB.add(nivel,i+1);
-                   sol.add(nivel,i+2);
-                    /*System.out.println("acarreo: "+acarreo+" suma: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
-                    System.out.println("solA: "+solA.get(nivel) +" nivel: "+ (nivel) +" "+i);
-                    System.out.println("solB: "+solB.get(nivel)+" nivel: "+ (nivel)+" "+(i+1) );
-                    System.out.println("sol: "+sol.get(nivel)+" nivel: "+ (nivel)+" "+(i+2) );*/
-                   if (sol.get(nivel) == (solA.get(nivel)+solB.get(nivel)+acarreo)){
-                        //System.out.println("sumaT: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
-                        acarreo = (solA.get(nivel)+solB.get(nivel)+acarreo)/10;
-                        //digF[nivel] = (solA[nivel]+solB[nivel]+acarreo)%10;
-                        //System.out.println("acarreonuew: "+acarreo);
+                    sinUsar.add(i,false);
+                    solA.add(nivel,(i));
+                    solB.add(nivel,(i+1)%10);
+                    sol.add(nivel,(i+2)%10);
+                    acarreo = (solA.get(nivel)+solB.get(nivel)+acarreo)/10;
+                    //dig = (solA[nivel]+solB[nivel]+acarreo)%10;
+                    
+                    System.out.println("acarreo: "+acarreo+" suma: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
+                    System.out.println("solA: "+solA.get(nivel) +" nivel: "+ (nivel) +"valor agregado: "+i);
+                    System.out.println("solB: "+solB.get(nivel)+" nivel: "+ (nivel)+"valor agregado: "+(i+1) );
+                    System.out.println("sol: "+sol.get(nivel)+" nivel: "+ (nivel)+"valor agregado: "+(i+2) );
+                    System.out.println("solA: "+solA );
+                    System.out.println("solB: "+solB );
+                    System.out.println("sol: "+sol );
+                    
+                    if (sol.get(nivel) == (solA.get(nivel)+solB.get(nivel)+acarreo) && (!(solA.get(0) == 0) && !(solB.get(0) == 0) && !(sol.get(0) == 0))){//si suma es satirfactoria
+                        sinUsar.add(i,false);
+                        System.out.println("sumaT: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
                         criptoaritmos(palabra1,palabra2,Resultado,sol,solA,solB,acarreo,nivel+1,sinUsar); //Backtracking
-                       
+                        sinUsar.add(i,true);
+                    }
+                    
+                    
+                    
+                    solA.remove(nivel);
+                    solB.remove(nivel);
+                    sol.remove(nivel);
+                    
+                   /*if (sol.get(nivel) == (solA.get(nivel)+solB.get(nivel)+acarreo)){
+                        
+                        acarreo = (solA.get(nivel)+solB.get(nivel)+acarreo)/10;
+                        //dig = (solA[nivel]+solB[nivel]+acarreo)%10;
+                        System.out.println("acarreonuew: "+acarreo);
+                        criptoaritmos(palabra1,palabra2,Resultado,sol,solA,solB,acarreo,nivel+1,sinUsar); //Backtracking
+                        sinUsar.add(i,true);
                   
                     
-                    }
-                    sinUsar.add(Boolean.TRUE);
+                    }*/
+               }
+                   //solA.remove(nivel);
+                   //solB.remove(nivel);
+                   //sol.remove(nivel);
+                    //sinUsar.add(Boolean.TRUE);
                    //System.out.println("sumaF: "+(solA.get(nivel)+solB.get(nivel)+acarreo));
                    
-               } 
+            } 
                
                  
-           }           
-        }
-   }
+        }           
+    }
+
    
    
    private static String obtenerUnicosCaracteres( String criptoraritmo )
@@ -128,7 +155,7 @@ public class Criptoaritmo {
    }
     
     public static void imprimirResultado(ArrayList<Integer> sol, String caracteres){
-        for (int i = 0; i < caracteres.length() ; i++){
+        for (int i = caracteres.length()-1; i >= 0 ; i++){
             System.out.print(" " + sol.get(i)+ " ");
         }
     }
